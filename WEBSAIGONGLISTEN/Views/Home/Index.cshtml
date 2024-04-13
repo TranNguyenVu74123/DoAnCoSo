@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WEBSAIGONGLISTEN.Models.Product>
+@{
+    ViewData["Title"] = "Trang chủ";
+    int numOfQuantity = 1;
+}
+
+<!-- Thêm thư viện Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+
+<section class="py-2">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model)
+            {
+                <div class="col mb-5">
+                    <div class="card gap-3" style="width: 18rem">
+                        <img src="@item.ImageUrl" class="card-img-top" alt="..." style="height: 300px">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </h5>
+                            <div class="d-flex">
+                                <span>Gía: </span>
+                                <p class="mx-3">@item.Price.ToString("#,##0") Vnđ</p>
+                            </div>
+                            <a asp-controller="Home" asp-action="Display" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity">
+                                <button class="btn btn-outline-dark"> <i class="fas fa-map-marked-alt me-1"></i>  Chi tiết... </button>
+                            </a>
+                            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity">
+                                <button class="btn btn-outline-dark"> <i class="fas fa-suitcase me-1"></i> Đặt tour </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Hiển thị phân trang -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+        {
+            <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

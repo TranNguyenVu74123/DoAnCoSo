@@ -1,0 +1,41 @@
+﻿@model WEBSAIGONGLISTEN.Models.SummaryViewModel
+
+@{
+    ViewData["Title"] = "Tổng Quan";
+}
+
+<h1>Tổng Quan</h1>
+
+<form method="get" action="@Url.Action("Summary", "Report")">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="date">Chọn Ngày:</label>
+            <input type="date" id="date" name="date" class="form-control">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="reportType">Loại Báo Cáo:</label>
+            <select id="reportType" name="reportType" class="form-control">
+                <option value="daily">Theo Ngày</option>
+                <option value="monthly">Theo Tháng</option>
+                <option value="yearly">Theo Năm</option>
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <button type="submit" class="btn btn-primary mt-4">Xem Báo Cáo</button>
+        </div>
+    </div>
+</form>
+
+@if (Model != null)
+{
+    <div class="card mt-4">
+        <div class="card-header">
+            Thông Tin Tổng Quan
+        </div>
+        <div class="card-body">
+            <p class="card-text">Tổng Số Người Dùng: @Model.TotalUsers</p>
+            <p class="card-text">Tổng Doanh Thu: @Model.TotalRevenue</p>
+            <p class="card-text">Tổng Số Tour: @Model.TotalTours</p>
+        </div>
+    </div>
+}

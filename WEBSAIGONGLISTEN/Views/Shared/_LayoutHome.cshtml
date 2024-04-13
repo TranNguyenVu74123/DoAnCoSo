@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="vi" data-bs-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="~/css/autocomplete.css" /> <!-- Liên kết đến file CSS chứa định dạng cho ô gợi ý -->
+    <link rel="shortcut icon" href="../../LayoutAdmin/assets/images/saigon-glisten.jpg" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- autocomplete -->
+    <script src="~/js/search-autocomplete.js"></script>
+</head>
+<body class="d-flex flex-column h-100">
+    <header class="navbar navbar-expand navbar-dark sticky-top flex-column flex-md-row bd-navbar" style="background-color: white;">
+        <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+            <img src="../../LayoutAdmin/assets/images/saigon-glisten.jpg" alt="logo" style="width: 70px; height: 70px;" />
+        </a>
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav bd-navbar-nav flex-row me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                </li>
+
+                <form id="searchForm" class="d-flex" asp-controller="Home" asp-action="Search" method="get">
+                    <input id="searchInput" class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" name="query">
+                    <div class="autocomplete-suggestions"></div> <!-- Thêm ô gợi ý -->
+                </form>
+
+                @if (User.IsInRole("Admin") || User.IsInRole("Company"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Product" asp-action="">Giao diện Admin || Company</a>
+                    </li>
+                }
+            </ul>
+            <partial name="_LoginPartial" />
+
+            <form asp-action="Index" asp-controller="ShoppingCart" class="d-flex">
+                <button class="btn btn-outline-dark" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                </button>
+            </form>
+        </div>
+
+    </header>
+    <main class="flex-shrink-0">
+        <div class="container  container-custom">
+            @RenderBody()
+        </div>
+    </main>
+    <footer class="footer mt-auto py-3 bg-body-tertiary">
+        &copy; 2024 - SAIGON GLISTEN - Đồ án môn học
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,20 @@
+﻿@model ChangeRoleViewModel
+
+<h1>Thay Đổi Vai Trò Người Dùng</h1>
+
+<div class="container">
+    <form asp-action="ChangeRole">
+        <input type="hidden" asp-for="UserId" />
+        <div class="form-group">
+            <label for="currentRole">Vai trò hiện tại</label>
+            <input type="text" class="form-control" id="currentRole" asp-for="CurrentRole" disabled />
+        </div>
+        <div class="form-group">
+            <label for="selectedRole">Chọn vai trò mới</label>
+            <select class="form-control" id="selectedRole" asp-for="SelectedRole" asp-items="@Model.Roles"></select>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+</div>
+
+<a asp-action="Index">Back to List</a>

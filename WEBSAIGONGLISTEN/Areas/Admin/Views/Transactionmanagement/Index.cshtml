@@ -1,0 +1,84 @@
+﻿@* @model IEnumerable<WEBSAIGONGLISTEN.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "Quản lý giao dịch";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quản lý giao dịch - Tour du lịch</title>
+    <!-- Thêm các tài nguyên CSS và JavaScript cần thiết -->
+    <!-- Ví dụ: -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý giao dịch - Tour du lịch</h1>
+        <!-- Form đặt tour -->
+        <div>
+            <h2>Đặt tour</h2>
+            <!-- Form đặt tour sẽ được điền thông tin về tour và hành khách -->
+            <!-- Ví dụ: -->
+            <form action="/TourBooking/Book" method="post">
+                <label for="tourName">Tên tour:</label>
+                <input type="text" id="tourName" name="tourName" required><br><br>
+                <label for="customerName">Tên hành khách:</label>
+                <input type="text" id="customerName" name="customerName" required><br><br>
+                <!-- Các trường thông tin khác -->
+                <button type="submit">Đặt tour</button>
+            </form>
+        </div>
+
+        <!-- Form huỷ tour -->
+        <div>
+            <h2>Huỷ tour</h2>
+            <!-- Form huỷ tour sẽ điền thông tin cần thiết để huỷ tour đã đặt -->
+            <!-- Ví dụ: -->
+            <form action="/TourBooking/Cancel" method="post">
+                <label for="bookingID">ID đặt tour cần huỷ:</label>
+                <input type="text" id="bookingID" name="bookingID" required><br><br>
+                <!-- Các trường thông tin khác -->
+                <button type="submit">Huỷ tour</button>
+            </form>
+        </div>
+
+        <!-- Hiển thị thông tin hành khách trong tour -->
+        <div>
+            <h2>Thông tin hành khách trong tour</h2>
+            <!-- Danh sách hành khách đang tham gia tour -->
+            <!-- Ví dụ: -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên hành khách</th>
+                        <!-- Các cột thông tin khác -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dữ liệu hành khách được lấy từ cơ sở dữ liệu -->
+                    <!-- Ví dụ: -->
+                    @foreach (var OrderDetail in Model.OrderDetail)
+                    {
+                        <tr>
+                            <td>@OrderDetail.Order.Id</td>
+                            <td>@OrderDetail.ApplicationUsers.UserName</td>
+                            <!-- Các cột thông tin khác -->
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+ *@
