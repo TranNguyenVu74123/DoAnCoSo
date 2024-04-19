@@ -1,24 +1,60 @@
 ﻿@model WEBSAIGONGLISTEN.Models.Product
-
 @{
-    ViewData["Title"] = "Display";
+    ViewData["Title"] = "Hiển thị gói du lịch";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h2 class="text-center">@ViewData["Title"]</h2>
 
-<h1>Display</h1>
-
-<h2>@ViewData["Title"]</h2>
-<h2>@Model.Name</h2>
-<div>
-<h3>Price: @Model.Price</h3>
-<p>@Model.Description</p>
-@if (!string.IsNullOrEmpty(Model.ImageUrl))
-{
-<img src="@Model.ImageUrl" alt="Product Image" style="max-width:
-200px;"/>
-}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card bg-light shadow mb-4">
+                <div class="card-header">
+                    <h3 class="text-primary">Thông tin cơ bản</h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">1. Tên: @Model.Name</h4>
+                    <h4 class="card-title">2. Giá: @Model.Price</h4>
+                    <!-- 3. Hình ảnh -->
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div>
+                            <h4 class="card-title">3. Hình ảnh:</h4>
+                            <img src="@Model.ImageUrl" alt="Hình ảnh sản phẩm" class="img-fluid rounded" style="max-width: 200px;" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-light shadow mb-4">
+                <div class="card-header">
+                    <h3 class="text-primary">Thông tin chi tiết</h3>
+                </div>
+                <div class="card-body">
+                    <!-- 4. Ngày khởi hành và Ngày về -->
+                    <h4 class="card-title">4. Ngày khởi hành: @Model.DepartureDate</h4>
+                    <h4 class="card-title">   Ngày về: @Model.ReturnDate</h4>
+                    <h4 class="card-title">5. Điểm đến: @Model.Destination</h4>
+                    <h4 class="card-title">6. Lịch trình:</h4>
+                    <p>@Model.Itinerary</p>
+                    <!-- 7. Bao gồm và Loại trừ -->
+                    <h4 class="card-title">7. Bao gồm:</h4>
+                    <p>@Model.Inclusions</p>
+                    <h4 class="card-title">   Loại trừ:</h4>
+                    <p>@Model.Exclusions</p>
+                    <h4 class="card-title">8. Ghi chú:</h4>
+                    <p>@Model.Notes</p>
+                    <h4 class="card-title">9. Sức chứa tối đa: @Model.MaximumCapacity</h4>
+                    <h4 class="card-title">10. Sức chứa còn lại: @Model.RemainingCapacity</h4>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<a asp-action="Index">Back to List</a>
+
+<a asp-action="Index" class="btn btn-primary btn-block mt-3">Quay lại danh sách</a>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

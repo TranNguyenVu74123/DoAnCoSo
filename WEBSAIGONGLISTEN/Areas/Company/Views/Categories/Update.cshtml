@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 @{
     ViewData["Title"] = "Cập nhật điểm đến";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <h2>@ViewData["Title"]</h2>
 <form asp-controller="Categories" asp-action="Update" method="post" enctype="multipart/form-data">
@@ -13,3 +14,8 @@
     </div>
     <button type="submit" class="btn btn-primary" style="margin-bottom: 20px;">Update</button>
 </form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

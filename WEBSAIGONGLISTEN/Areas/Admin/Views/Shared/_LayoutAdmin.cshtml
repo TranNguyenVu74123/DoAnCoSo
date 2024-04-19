@@ -124,13 +124,13 @@
                                     <i class="mdi mdi-account menu-icon"></i>
                                 </a>
                             </li> *@
-                            <li class="nav-item">
+                           @*  <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Index", "Transactionmanagement")">
                                     <span class="menu-title">Quản lý giao dịch</span>
                                 </a>
-                            </li>
+                            </li> *@
                          }
-                          @if (User.IsInRole("Company")) 
+                        @*   @if (User.IsInRole("Company")) 
                          {
                              <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Index", "Report")">
@@ -138,7 +138,7 @@
                                     <i class="mdi mdi-account menu-icon"></i>
                                 </a>
                             </li>
-                         }
+                         } *@
                        
                         <!-- ... -->
                     </ul>

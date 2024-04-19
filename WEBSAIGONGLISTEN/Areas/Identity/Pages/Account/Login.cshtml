@@ -1,4 +1,4 @@
-﻿@page
+﻿@* @page
 @model LoginModel
 
 @{
@@ -53,6 +53,32 @@
                     </p>
                 </div>
             </form>
+
+            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                <div>
+                    <p>
+                        @foreach (var provider in Model.ExternalLogins!)
+                        {
+                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your">@provider.Name</button>
+                        }
+                    </p>
+                </div>
+            </form>
+
+             <p class="text-danger">@Model.ErrorMessage</p>
+
+             <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                <div>
+                    <p>
+                        @foreach (var provider in Model.ExternalLogins)
+                        {
+                            <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your">@provider.Name</button>
+                        }
+                    </p>
+                </div>
+            </form>
+            <button type="submit" class="btn btn-facebook" name="provider" value="Facebook" title="Log in using Facebook">Log in with Facebook</button>
+
         </section>
     </div>
 </div>
@@ -70,5 +96,107 @@
                 }
             });
         };
+    </script>
+}
+  *@
+
+     @page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<style>
+    body {
+        background: linear-gradient(to bottom, #6e529d 0%, #d97b93 100%);
+        height: 100vh;
+    }
+</style>
+
+<h1 class="text-center text-light mb-4">@ViewData["Title"]</h1>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <section class="bg-light p-4 rounded">
+            <form id="account" method="post" class="needs-validation" novalidate>
+                <h2 class="text-center mb-4">Đăng nhập tài khoản</h2>
+                <hr />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" required />
+                    <label asp-for="Input.Email" class="form-label">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" required />
+                    <label asp-for="Input.Password" class="form-label">Mật khẩu</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <label class="form-check-label" asp-for="Input.RememberMe">Nhớ mật khẩu</label>
+                </div>
+
+                <input type="hidden" asp-for="RecaptchaResponse" />
+                <div id="recaptcha" class="mb-3"></div>
+
+                <div class="text-center mb-3">
+                    <button id="login-submit" type="submit" class="btn btn-lg btn-primary" style="background-color: #4CAF50;">Đăng nhập</button>
+                </div>
+
+                <div class="text-center">
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword" class="text-decoration-none text-muted">Quên mật khẩu?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none text-muted">Đăng ký tài khoản mới</a>
+                    </p>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <p>Đăng nhập với:</p>
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="mb-3">
+                    <button type="submit" class="btn btn-primary" name="provider" value="Google" style="background-color: #ff3c00;">Google</button>
+                    <button type="submit" class="btn btn-primary" name="provider" value="Facebook">Facebook</button>
+                </form>
+            </div>
+
+            <p class="text-danger">@Model.ErrorMessage</p>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        var onloadCallback = function () {
+            grecaptcha.render('recaptcha', {
+                'sitekey': '6LcorbkpAAAAAOSZZ5kTimR5bsbRmU4TeErp84bO',
+                'callback': function (response) {
+                    document.getElementById("RecaptchaResponse").value = response;
+                }
+            });
+        };
+
+        // Chỉ kích hoạt hiệu ứng Tooltip của Bootstrap trên các trường không hợp lệ
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
     </script>
 }

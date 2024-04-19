@@ -3,52 +3,82 @@
     ViewData["Title"] = "Danh sách gói du lịch";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+
 <h2>@ViewData["Title"]</h2>
-<table class="table">
+<div style="overflow-x: auto; margin-bottom: 50px;">
+    <!-- Khoảng trống cho footer -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Giá</th>
+               @*  <th>Mô tả</th> *@
+                <th>Khu vực</th>
+                <th>Điểm đến</th>
+                <th>Ngày khởi hành</th>
+                <th>Ngày về</th>
+                <th>Hình ảnh</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    @* <td>@product.Description</td> *@
+                    <td>@product.Category.Name</td>
+                    <td>@product.Destination</td>
+                    <td>@product.DepartureDate.ToString("dd/MM/yyyy")</td>
+                    <td>@product.ReturnDate.ToString("dd/MM/yyyy")</td>
+                    <td><img src="@product.ImageUrl" alt="Product Image" style="max-width: 100px;"></td>
+                    <td>
+                        <a asp-action="Display" asp-route-id="@product.Id">Xem</a> |
+                        <a asp-action="Update" asp-route-id="@product.Id">Sửa</a> |
+                        <a asp-action="Delete" asp-route-id="@product.Id">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<thead>
-<tr>
-<th>Tên</th>
-<th>Gía</th>
-<th>Miêu tả</th>
-<th>Khu vực</th>
-<th>Images</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody>
-@foreach (var product in Model)
-{
-<tr>
-<td>@product.Name</td>
-<td>@product.Price</td>
-<td>@product.Description</td>
-<td>@product.Category?.Name</td>
-                <td><img src="@product.ImageUrl" style="max-width:200px;" /></td>
-<td>
+     <!-- Phân trang -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            @if (ViewData["CurrentPage"] != null && ViewData["TotalPages"] != null)
+            {
+                int currentPage = (int)ViewData["CurrentPage"];
+                int totalPages = (int)ViewData["TotalPages"];
 
-<a asp-action="Display" asp-route-id="@product.Id">View</a> |
+                @* <!-- Nút Previous --> *@
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1 })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Trước</span>
+                    </a>
+                </li>
 
-<a asp-action="Update" asp-route-id="@product.Id">Edit</a> |
+               @*  <!-- Các trang --> *@
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
 
-<a asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+             @*    <!-- Nút Next --> *@
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1 })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Sau</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
 
-</td>
-</tr>
-}
-</tbody>
-</table>
-
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
-        {
-            <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
-            </li>
-        }
-    </ul>
-</nav>
+</div>
 
 @section Scripts {
     @{

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WEBSAIGONGLISTEN.Extensions;
 using WEBSAIGONGLISTEN.Models;
 
-namespace WebBanHang.Controllers
+namespace WEBSAIGONGLISTEN.Controllers
 {
     [Authorize]
     public class ShoppingCartController : Controller

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@* <!DOCTYPE html>
 <html lang="vi" data-bs-theme="light">
 <head>
     <meta charset="utf-8" />
@@ -111,4 +111,134 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
    @await RenderSectionAsync("Scripts", required: false)
 </body>
+</html> *@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/autocomplete.css" /> <!-- Liên kết đến file CSS chứa định dạng cho ô gợi ý -->
+    <link rel="shortcut icon" href="../../LayoutAdmin/assets/images/saigon-glisten.jpg" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Thêm thư viện Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <style>
+        /* Custom CSS styles */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar-brand img {
+            border-radius: 50%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .searchInput {
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            margin-right: 10px;
+            width: 300px;
+        }
+
+        .autocompleteDropdown {
+            position: absolute;
+            z-index: 1000;
+            width: 300px;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none; /* Bắt đầu ẩn dropdown */
+        }
+
+            .autocompleteDropdown.show {
+                display: block; /* Hiển thị dropdown khi được kích hoạt */
+            }
+
+            .autocompleteDropdown li {
+                padding: 8px 12px;
+                cursor: pointer;
+            }
+
+                .autocompleteDropdown li:hover {
+                    background-color: #f2f2f2;
+                }
+
+    </style>
+</head>
+<body class="d-flex flex-column h-100">
+    <header class="navbar navbar-expand navbar-dark sticky-top flex-column flex-md-row bd-navbar" style="background-color: white;">
+        <div class="container">
+            <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+                <img src="../../LayoutAdmin/assets/images/saigon-glisten.jpg" alt="logo" style="width: 70px; height: 70px;" />
+            </a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav bd-navbar-nav flex-row me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                    </li>
+
+                    <li class="nav-item">
+<form id="searchForm" class="search-container" asp-controller="Home" asp-action="Search" method="post" autocomplete="on">
+                            <input id="searchInput" class="form-control searchInput me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" name="query">
+                            <ul id="autocompleteDropdown" class="autocompleteDropdown" aria-labelledby="searchInput"></ul> <!-- Dropdown autocomplete -->
+                            <button id="searchButton" class="btn btn-primary" type="submit">Tìm kiếm</button> <!-- Nút SearchButton -->
+                        </form>
+                    </li>
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("Company"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Product" asp-action="">Giao diện Admin || Company</a>
+                        </li>
+                    }
+                </ul>
+                <partial name="_LoginPartial" />
+
+                @if (User.IsInRole("Customer"))
+                {
+                    <form asp-action="Index" asp-controller="ShoppingCart" class="d-flex">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="fas fa-suitcase me-1"></i>
+                            Tour của bạn
+                        </button>
+                    </form>
+                }
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-shrink-0">
+        <div class="container container-custom">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-body-tertiary">
+        <div class="container">
+            &copy; 2024 - SAIGON GLISTEN - Nơi đưa bạn đến với những chuyến du lịch thú vị
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
 </html>
+

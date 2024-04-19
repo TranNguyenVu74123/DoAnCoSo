@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using WEBSAIGONGLISTEN.Models;
 using WEBSAIGONGLISTEN.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -50,6 +52,20 @@ builder.Services.AddreCAPTCHAV2(x =>
     x.SiteKey = "6LcorbkpAAAAAOSZZ5kTimR5bsbRmU4TeErp84bO";
     x.SiteSecret = "6LcorbkpAAAAAC5oGihIiVHY50_IsXRSnxrQUnHA";
 });
+
+builder.Services.AddAuthentication()
+   .AddGoogle(options =>
+   {
+       IConfigurationSection googleAuthNSection = config.GetSection("Authentication:Google");
+       options.ClientId = googleAuthNSection["ClientId"];
+       options.ClientSecret = googleAuthNSection["ClientSecret"];
+   })
+   .AddFacebook(options =>
+   {
+       IConfigurationSection FBAuthNSection = config.GetSection("Authentication:Facebook");
+       options.AppId = FBAuthNSection["AppId"];
+       options.AppSecret = FBAuthNSection["AppSecret"];
+   });
 
 var app = builder.Build();
 
@@ -112,7 +128,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
        name: "AdminCategorySearch",
        pattern: "{area:exists}/{controller=Product}/searchcategory",  // ???ng d?n ??n action "SearchCategory"
-       defaults: new { controller = "Product", action = "SearchCategory" },  // Thêm action "SearchCategory" ? ?ây
+       defaults: new { controller = "Product", action = "SearchCategory" },  // Thï¿½m action "SearchCategory" ? ?ï¿½y
        constraints: new { area = "Admin", httpMethod = new HttpMethodRouteConstraint("POST") }
    );
 

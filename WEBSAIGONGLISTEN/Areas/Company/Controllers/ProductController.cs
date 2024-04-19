@@ -136,6 +136,15 @@ namespace WEBSAIGONGLISTEN.Areas.Company.Controllers
                 existingProduct.Description = product.Description;
                 existingProduct.CategoryId = product.CategoryId;
                 existingProduct.ImageUrl = product.ImageUrl;
+                existingProduct.DepartureDate = product.DepartureDate;
+                existingProduct.ReturnDate = product.ReturnDate;
+                existingProduct.Itinerary = product.Itinerary;
+                existingProduct.Inclusions = product.Inclusions;
+                existingProduct.Exclusions = product.Exclusions;
+                existingProduct.Notes = product.Notes;
+                existingProduct.MaximumCapacity = product.MaximumCapacity;
+                existingProduct.RemainingCapacity = product.RemainingCapacity;
+
                 await _productRepository.UpdateAsync(existingProduct);
                 return RedirectToAction(nameof(Index));
             }

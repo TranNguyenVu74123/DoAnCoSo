@@ -76,7 +76,6 @@ namespace WEBSAIGONGLISTEN.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            [Required]
             public string FullName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used

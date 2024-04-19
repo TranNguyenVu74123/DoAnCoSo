@@ -2,59 +2,100 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 @{
     ViewData["Title"] = "Cập nhật gói du lịch";
-     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-<h2>@ViewData["Title"]</h2>
-<form asp-action="Update" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Id" />
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-<textarea asp-for="Description" class="form-control"></textarea>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="card mt-4">
+                <h2 class="card-header text-center">@ViewData["Title"]</h2>
+                <div class="card-body">
+                    <form asp-action="Update" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="Name" class="font-weight-bold">Tên gói du lịch:</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Price" class="font-weight-bold">Giá:</label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="font-weight-bold">Mô tả:</label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CategoryId" class="font-weight-bold">Khu vực:</label>
+                            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
+                        </div>
 
-        <span asp-validation-for="Description" class="text-danger"></span>
+                        <div class="form-group">
+                            <label asp-for="ImageUrl" class="font-weight-bold">Hình ảnh sản phẩm:</label>
+                            <input type="file" asp-for="ImageUrl" class="form-control" id="imageInput" onchange="previewImage()" />
+                            <img src="@Model.ImageUrl" alt="Hình ảnh sản phẩm" class="mt-2 img-thumbnail d-block mx-auto" style="max-width: 200px;" />
+                        </div>
 
+                        <!-- Các Trường Mới -->
+                        <div class="form-group">
+                            <label asp-for="DepartureDate" class="font-weight-bold">Ngày khởi hành:</label>
+                            <input asp-for="DepartureDate" class="form-control" type="date" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ReturnDate" class="font-weight-bold">Ngày trở về:</label>
+<input asp-for="ReturnDate" class="form-control" type="date" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Destination" class="font-weight-bold">Điểm đến:</label>
+                            <input asp-for="Destination" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Itinerary" class="font-weight-bold">Lịch trình:</label>
+                            <textarea asp-for="Itinerary" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Inclusions" class="font-weight-bold">Bao gồm:</label>
+                            <textarea asp-for="Inclusions" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Exclusions" class="font-weight-bold">Không bao gồm:</label>
+                            <textarea asp-for="Exclusions" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Notes" class="font-weight-bold">Ghi chú:</label>
+                            <textarea asp-for="Notes" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MaximumCapacity" class="font-weight-bold">Sức chứa tối đa:</label>
+                            <input asp-for="MaximumCapacity" class="form-control" type="number" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="RemainingCapacity" class="font-weight-bold">Sức chứa còn lại:</label>
+                            <input asp-for="RemainingCapacity" class="form-control" type="number" />
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-4">Cập nhật</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label asp-for="CategoryId">Category</label>
-        <select asp-for="CategoryId" asp-items="@ViewBag.Categories"
-                class="form-control"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="ImageUrl">Product Image</label>
-        <input type="file" asp-for="ImageUrl" class="form-control" />
-    </div>
-     <button type="submit" class="btn btn-primary" style="margin-bottom: 20px;">Update</button>
-    <div class="col-8">
-        <img src="@Model.ImageUrl" alt="Product Image" style="max-width:200px;"
-             id="previewImage" />
-    </div>
-    </div>
-    </div>
-   
-</form>
+</div>
 
 <script>
-    document.querySelectorAll('input[type="file"]').forEach(input => {
-    input.addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-    const img = document.getElementById("previewImage")
-    img.src = e.target.result
-    };
-    reader.readAsDataURL(file);
+    function previewImage() {
+        var preview = document.getElementById("imagePreview");
+        var file = document.getElementById("imageInput").files[0];
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     }
-    });
-    });
 </script>

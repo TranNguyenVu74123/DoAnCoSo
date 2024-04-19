@@ -19,6 +19,8 @@ using Microsoft.CodeAnalysis.Scripting;
 using Owl.reCAPTCHA.v2;
 using NuGet.Common;
 using Owl.reCAPTCHA;
+using Microsoft.EntityFrameworkCore;
+
 
 //namespace WEBSAIGONGLISTEN.Areas.Identity.Pages.Account
 //{
