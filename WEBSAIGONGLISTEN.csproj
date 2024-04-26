@@ -1,0 +1,102 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-WEBSAIGONGLISTEN-988840b7-878a-4b51-9f1b-9846649f5ddb</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Company\**" />
+    <Compile Remove="Areas\Customer\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Company\**" />
+    <Content Remove="Areas\Customer\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Company\**" />
+    <EmbeddedResource Remove="Areas\Customer\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Company\**" />
+    <None Remove="Areas\Customer\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Areas\Company\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Company\Controllers\ProductController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Company\Views\Product\Delete.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Areas\Company\Views\Product\Display.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Areas\Company\Views\Product\Update.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Areas\Company\Views\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Areas\Company\Views\_ViewStart.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="Owl.reCAPTCHA" Version="8.0.0" />
+    <PackageReference Include="SendGrid" Version="9.29.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\Categories\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Categories\Display.cshtml" />
+    <None Include="Areas\Admin\Views\Categories\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Categories\Update.cshtml" />
+    <None Include="Areas\Admin\Views\Product\Add.cshtml" />
+    <None Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <None Include="Areas\Company\Views\Categories\Add.cshtml" />
+    <None Include="Areas\Company\Views\Categories\Delete.cshtml" />
+    <None Include="Areas\Company\Views\Categories\Display.cshtml" />
+    <None Include="Areas\Company\Views\Categories\Index.cshtml" />
+    <None Include="Areas\Company\Views\Categories\Update.cshtml" />
+    <None Include="Areas\Company\Views\Product\Add.cshtml" />
+    <None Include="Areas\Company\Views\Product\Index.cshtml" />
+    <None Include="Views\ShoppingCart\Checkout.cshtml" />
+    <None Include="Views\ShoppingCart\Index.cshtml" />
+    <None Include="Views\ShoppingCart\OrderCompleted.cshtml" />
+    <None Include="wwwroot\LayoutAdmin\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+</Project>

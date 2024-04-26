@@ -1,0 +1,34 @@
+﻿﻿@{
+    ViewData["Title"] = "Tour";
+    Layout = ViewData["Layout"] as string ?? "_Layout";
+    int numOfQuantity = 1;
+}
+
+    <div class="row">
+        @foreach (var tour in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img class="card-img-top" src="@tour.ImageUrl" alt="Tour Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@tour.Name</h5>
+                        <p class="card-text">@tour.Description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a asp-controller="Home" asp-action="Display" asp-route-productId="@tour.Id"
+                                   asp-route-quantity="@numOfQuantity">
+                                    <button class="btn btn-outline-dark"> <i class="fas fa-palm-tree me-1"></i> Chi tiết... </button>
+                                </a>
+                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@tour.Id"
+                                   asp-route-quantity="@numOfQuantity">
+                                    <button class="btn btn-outline-dark"> <i class="bi-cart-fill me-1"></i> Thêm vào giỏ </button>
+                                </a>
+                            </div>
+                            <small class="text-muted">@tour.Price.ToString("c")</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿.autocomplete-suggestions {
+    border: 1px solid #ccc; /* định kiểu viền */
+    background: #fff; /* màu nền */
+    overflow-y: auto; /* cho phép cuộn dọc */
+    max-height: 200px; /* chiều cao tối đa */
+    position: absolute; /* vị trí tuyệt đối */
+    width: 100%; /* chiều rộng */
+}
+
+.autocomplete-suggestion {
+    padding: 8px 12px; /* khoảng cách giữa các ô gợi ý */
+    cursor: pointer; /* con trỏ chuột thành dấu nhấp chuột */
+}
+
+    .autocomplete-suggestion:hover {
+        background-color: #f2f2f2; /* màu nền khi di chuột qua */
+    }
+
+    .autocomplete-suggestion.selected {
+        background-color: #007bff; /* màu nền khi được chọn */
+        color: #fff; /* màu chữ khi được chọn */
+    }

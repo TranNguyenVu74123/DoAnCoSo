@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WEBSAIGONGLISTEN.Models.Category>
+
+@{
+    ViewData["Title"] = "Danh sách điểm đến";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-3">
+    <h2 class="text-center">@ViewData["Title"]</h2>
+
+    <div class="row">
+        <div class="col-md-12 text-right mb-3">
+            <a asp-action="Add" class="btn btn-success">Thêm thể loại mới</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            <a asp-action="Display" asp-route-id="@item.Id" class="btn btn-sm btn-info">Xem</a>
+                            <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa thể loại này?');">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+          <!-- Phân trang -->
+    <nav aria-label="Điều hướng trang">
+        <ul class="pagination justify-content-center">
+            @if (ViewData["CurrentPage"] != null && ViewData["TotalPages"] != null)
+            {
+                int currentPage = (int)ViewData["CurrentPage"];
+                int totalPages = (int)ViewData["TotalPages"];
+
+              @*   <!-- Nút Trước --> *@
+                <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = currentPage - 1 })" aria-label="Trước">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Trước</span>
+                    </a>
+                </li>
+
+               @*  <!-- Các trang --> *@
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                    </li>
+                }
+
+            @*     <!-- Nút Sau --> *@
+                <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = currentPage + 1 })" aria-label="Sau">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Sau</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
